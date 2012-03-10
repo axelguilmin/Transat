@@ -1,4 +1,10 @@
-transat/.classpath
-transat/.project
-transat/.settings/
-transat/eclipse/
+server/.classpath
+server/.project
+server/.settings/
+server/eclipse/
+
+applet/.classpath
+applet/.project
+applet/.settings/
+applet/eclipse/
+applet/.externalToolBuilders
