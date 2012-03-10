@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<project name="applet" default="copyBin"> 
+
+	<! -- See : http://www.titouille.ch/blog/executer-une-tache-ant-automatiquement-la-compilation-eclipse for more information -->
+ 
+	<!-- source and target directory -->
+	<property name="server.public" value = "${basedir}/../server/public/applet"/>
+	<property name="project.bin" value = "${basedir}/bin"/>
+ 
+	<!-- copy all files into the server directory -->
+	<target name="copyBin" >
+		<copy todir="${server.public}">
+ 			<fileset dir="${project.bin}" />
+		</copy>
+  	</target>
+	
+</project>
