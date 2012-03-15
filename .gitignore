@@ -8,3 +8,5 @@ applet/.project
 applet/.settings/
 applet/eclipse/
 applet/.externalToolBuilders
+
+.DS_Store
