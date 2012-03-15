@@ -1,0 +1,4 @@
+14 mars 2012 15:41:04,766 INFO  ~ Starting /home/axel/Transat/git/server/.
+14 mars 2012 15:41:05,781 WARN  ~ You're running Play! in DEV mode
+14 mars 2012 15:41:07,747 INFO  ~ Connected to jdbc:h2:mem:play;MODE=MYSQL;LOCK_MODE=0
+14 mars 2012 15:41:07,816 INFO  ~ Application 'server' is now started !
