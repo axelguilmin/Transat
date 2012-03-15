@@ -1,3 +1,5 @@
+.DS_Store
+
 server/.classpath
 server/.project
 server/.settings/
@@ -8,5 +10,4 @@ applet/.project
 applet/.settings/
 applet/eclipse/
 applet/.externalToolBuilders
-
-.DS_Store
+applet/bin
