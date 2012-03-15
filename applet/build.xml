@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<project name="applet" default="copyBin"> 
+<project name="applet" default="copyBin">
 
-	<! -- See : http://www.titouille.ch/blog/executer-une-tache-ant-automatiquement-la-compilation-eclipse for more information -->
+	<!-- See : http://www.titouille.ch/blog/executer-une-tache-ant-automatiquement-la-compilation-eclipse for more information -->
  
 	<!-- source and target directory -->
 	<property name="server.public" value = "${basedir}/../server/public/applet"/>

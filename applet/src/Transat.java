@@ -7,7 +7,6 @@ import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-
 public class Transat extends JApplet { 
 
 	private JLabel label = new JLabel();
@@ -17,7 +16,7 @@ public class Transat extends JApplet {
 	 * Méthode d'initialisation de l'applet
 	 * C'est cette méthode qui fait office de constructeur
 	 */
-	public void init(){
+	public void init(){ 
 		this.setSize(300, 80);
 
 		//On centre le texte du JLabel et on écrit en bleu...

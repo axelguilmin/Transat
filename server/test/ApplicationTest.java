@@ -14,4 +14,12 @@ public class ApplicationTest extends FunctionalTest {
         assertCharset(play.Play.defaultWebEncoding, response);
     }
     
+    @Test
+    public void testLogin() {
+        Response response = GET("/user/login?pseudo=axel&password=axel");
+        assertIsOk(response);
+        assertContentType("application/json", response);
+        assertCharset(play.Play.defaultWebEncoding, response);
+    }
+    
 }
