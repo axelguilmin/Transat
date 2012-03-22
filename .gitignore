@@ -11,3 +11,5 @@ applet/.settings/
 applet/eclipse/
 applet/.externalToolBuilders
 applet/bin
+server/db
+server/public

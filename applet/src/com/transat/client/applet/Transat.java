@@ -46,7 +46,8 @@ public class Transat extends JApplet
 		*/
 		
 		
-		this.setContentPane( new LoginPanel() );		
+		//this.setContentPane( new LoginPanel() );		
+		this.setContentPane( new SignupPanel() );		
 		
 		
 		//this.getContentPane().add(bouton, BorderLayout.SOUTH);

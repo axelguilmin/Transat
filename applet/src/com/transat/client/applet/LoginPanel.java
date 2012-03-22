@@ -16,8 +16,11 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -27,6 +30,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.transat.client.utils.Log;
 
 
 
@@ -109,7 +117,6 @@ public class LoginPanel extends JPanel implements ActionListener
 		this.b_center.add(this.bt_ok);
 		
 		
-		
 		this.add(this.l_title, BorderLayout.NORTH);
 		this.add(this.b_center, BorderLayout.CENTER);
 		
@@ -124,8 +131,46 @@ public class LoginPanel extends JPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent event)
 	{
-		String dataUrl = "http://localhost:9000/user/read?pseudo=axel&password=axel";
+		
+		// CLIC BOUTON LOGIN
+		String pseudo = this.t_pseudo.getText();
+		String password = new String( this.t_password.getPassword() );
+		if( pseudo.length()>0 && password.length()>0 )
+		{
+			String jsonString = sendRequestGet( "http://localhost:9000/user/read?pseudo="+pseudo+"&password="+password+"" );
+			if( jsonString.length() > 0 )
+			{
+				try {
+					JSONObject obj = new JSONObject( jsonString );
+					Log.v( "response : "+obj.getString("pseudo") );
+					Log.v( "response : "+obj.getString("password") );
+					Log.v( "response : "+obj.getString("email") );
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+			else
+			{
+				Log.v("Le serveur n'a rien renvoyé :)");
+			}
+		}
+		else
+		{
+			
+		}
+	}
+	
+	
+	
+	
+	//-----------------------------------------
+	//	METHODS
+	//-----------------------------------------
+	String sendRequestGet( String requestURL )
+	{
+		String result = "";		
 		//dataUrl = dataUrl.replace(" ", "%20");
+		String dataUrl = requestURL;
 		URL 		url 		= null;
 		Object 		content 	= null;
 		String		response	= null;
@@ -140,19 +185,21 @@ public class LoginPanel extends JPanel implements ActionListener
 		if( content != null )
 		{
 			InputStream is	= (InputStream) content;
-			response = is.toString();
-			System.out.println(response);
+			StringWriter writer = new StringWriter();
+			InputStreamReader streamReader = new InputStreamReader(is);
+			BufferedReader buffer=new BufferedReader(streamReader);
+			String line="";
+			try {
+				while ( null!=(line=buffer.readLine())){
+					writer.write(line); 
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			result = writer.toString();
 		}
-		
+		return result;
 	}
-	
-	
-	
-	
-	//-----------------------------------------
-	//	METHODS
-	//-----------------------------------------
-	
 	
 	
 	

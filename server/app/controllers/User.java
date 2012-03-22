@@ -30,8 +30,8 @@ public class User extends Controller {
 		validation.required(password);
 		validation.required(email);
 		validation.email(email);
-		validation.min(password.length(), 5);
-		validation.min(pseudo.length(), 1);
+		//validation.min(password.length(), 5);
+		//validation.min(pseudo.length(), 1);
 		
 		// Vérifier que le pseudo n'est pas déja utilisé
 		if(models.User.find("pseudo = ? ",pseudo).fetch().size() > 0)
