@@ -13,3 +13,7 @@ applet/.externalToolBuilders
 applet/bin
 server/db
 server/public
+/AppletTransat/dist/
+AppletTransat/build/
+AppletTransat/build/classes/
+server/logs/

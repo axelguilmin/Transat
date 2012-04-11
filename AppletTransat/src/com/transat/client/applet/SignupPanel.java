@@ -4,6 +4,15 @@
  */
 package com.transat.client.applet;
 
+import com.transat.client.utils.HttpResponse;
+import com.transat.client.utils.HttpUtils;
+import com.transat.client.utils.Log;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  *
  * @author gaetan
@@ -36,10 +45,10 @@ public class SignupPanel extends javax.swing.JPanel {
         b_ok = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(204, 204, 204));
-        setPreferredSize(new java.awt.Dimension(800, 550));
+        setPreferredSize(new java.awt.Dimension(800, 600));
 
         l_title.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        l_title.setText("Inscription");
+        l_title.setText("Créer un compte");
 
         l_email.setText("E-mail : ");
 
@@ -64,23 +73,24 @@ public class SignupPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(layout.createSequentialGroup()
-                .add(356, 356, 356)
-                .add(l_title, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(layout.createSequentialGroup()
+                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(l_mdp)
+                            .add(l_email)
+                            .add(l_pseudo))
+                        .add(18, 18, 18)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(b_ok)
+                            .add(t_pseudo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(t_email, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(t_mdp, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                    .add(layout.createSequentialGroup()
+                        .add(356, 356, 356)
+                        .add(l_title, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .add(376, 376, 376))
-            .add(layout.createSequentialGroup()
-                .add(214, 214, 214)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(l_mdp)
-                    .add(l_email)
-                    .add(l_pseudo))
-                .add(18, 18, 18)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(b_ok)
-                    .add(t_pseudo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(t_email, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(t_mdp, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -101,7 +111,7 @@ public class SignupPanel extends javax.swing.JPanel {
                     .add(t_mdp, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .add(35, 35, 35)
                 .add(b_ok)
-                .addContainerGap(241, Short.MAX_VALUE))
+                .addContainerGap(291, Short.MAX_VALUE))
         );
 
         l_title.getAccessibleContext().setAccessibleName("label_title");
@@ -114,10 +124,48 @@ public class SignupPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void b_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_okActionPerformed
-        // TODO add your handling code here:
+        Log.v("signup request");
         
-    }//GEN-LAST:event_b_okActionPerformed
+        String pseudo = t_pseudo.getText();
+        String email = t_email.getText();
+        String password = t_mdp.getText();
+        
+        // CLIC BOUTON LOGIN
+        if( pseudo.length()>0 && password.length()>0 )
+        {
+            String url = "http://localhost:9000/user/read?pseudo="+pseudo+"&password="+password;
+            HttpResponse response = HttpUtils.getInstance().sendRequestGet( url );
+            
+            String jsonString = response.text;
+            if( jsonString.length() > 0 )
+            {
+                Log.v(jsonString);
+                try {
+                        JSONObject obj = new JSONObject( jsonString );
+                        Log.v( "response : "+obj.getString("pseudo") );
+                        Log.v( "response : "+obj.getString("password") );
+                        Log.v( "response : "+obj.getString("email") );
+                } catch (JSONException e) {
+                        e.printStackTrace();
+                }
+            }
+            else
+            {
+                    Log.v("Le serveur n'a rien renvoyé :)");
+            }
+        }
+        else
+        {
 
+        }
+    }//GEN-LAST:event_b_okActionPerformed
+    
+    
+    
+
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b_ok;
     private javax.swing.JLabel l_email;

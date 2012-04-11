@@ -4,8 +4,11 @@
  */
 package com.transat.client.applet;
 
+import com.transat.client.applet.HomePanel;
+import com.transat.client.applet.LoginPanel;
 import com.transat.client.applet.SignupPanel;
-
+import java.awt.Container;
+import java.awt.Dimension;
 
 /**
  *
@@ -13,6 +16,29 @@ import com.transat.client.applet.SignupPanel;
  */
 public class Transat extends javax.swing.JApplet {
 
+    
+    //------------------------------------------
+    //  STATIC
+    //------------------------------------------
+    static final int MODE_NONE = 0;
+    static final int MODE_HOME = 1;
+    static final int MODE_SIGNUP = 2;
+    static final int MODE_LOGIN = 3;
+    
+    
+    
+    //------------------------------------------
+    //  ATTRIBUTES
+    //------------------------------------------
+    private HomePanel homePanel = new HomePanel();
+    private LoginPanel loginPanel = new LoginPanel();
+    private SignupPanel signupPanel = new SignupPanel();
+    
+    private int MODE = MODE_NONE;
+    
+    
+    
+    
     /**
      * Initializes the applet Transat
      */
@@ -59,8 +85,49 @@ public class Transat extends javax.swing.JApplet {
             ex.printStackTrace();
         }
         
-        this.setContentPane(new SignupPanel() );
+        this.setContentPane( new HomePanel() );
     }
+    
+    
+    
+    
+    
+    //
+    //  METHODS
+    //
+    public void changeMode( int newMode )
+    {
+        switch( newMode )
+        {
+            case Transat.MODE_NONE:
+                this.MODE = MODE_NONE;
+                break;
+            case Transat.MODE_SIGNUP:
+                this.MODE = MODE_SIGNUP;
+                this.setContentPane( new SignupPanel() );
+                break;
+            case Transat.MODE_LOGIN:
+                this.MODE = MODE_LOGIN;
+                this.setContentPane( new LoginPanel() );                
+                break;
+            case Transat.MODE_HOME:
+                this.MODE = MODE_HOME;
+                this.setContentPane( new HomePanel() );
+                break;
+        }
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
 
     /**
      * This method is called from within the init() method to initialize the
@@ -71,17 +138,18 @@ public class Transat extends javax.swing.JApplet {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        setMinimumSize(new java.awt.Dimension(800, 600));
         setPreferredSize(new java.awt.Dimension(800, 600));
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 723, Short.MAX_VALUE)
+            .add(0, 800, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 425, Short.MAX_VALUE)
+            .add(0, 600, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables

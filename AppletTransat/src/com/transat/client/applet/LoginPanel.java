@@ -4,6 +4,13 @@
  */
 package com.transat.client.applet;
 
+import com.transat.client.entities.User;
+import com.transat.client.utils.HttpResponse;
+import com.transat.client.utils.HttpUtils;
+import com.transat.client.utils.Log;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  *
  * @author gaetan
@@ -26,19 +33,140 @@ public class LoginPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setPreferredSize(new java.awt.Dimension(800, 550));
+        b_ok = new javax.swing.JButton();
+        l_mdp = new javax.swing.JLabel();
+        l_pseudo = new javax.swing.JLabel();
+        l_title = new javax.swing.JLabel();
+        t_password = new javax.swing.JTextField();
+        t_pseudo = new javax.swing.JTextField();
+
+        setBackground(new java.awt.Color(204, 204, 204));
+        setPreferredSize(new java.awt.Dimension(800, 600));
+
+        b_ok.setText("OK");
+        b_ok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_okActionPerformed(evt);
+            }
+        });
+
+        l_mdp.setText("Mot de passe : ");
+
+        l_pseudo.setText("Pseudo : ");
+
+        l_title.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        l_title.setText("Se connecter");
+
+        t_password.setPreferredSize(new java.awt.Dimension(100, 28));
+
+        t_pseudo.setPreferredSize(new java.awt.Dimension(100, 28));
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 400, Short.MAX_VALUE)
+            .add(layout.createSequentialGroup()
+                .add(290, 290, 290)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(l_mdp)
+                    .add(l_pseudo))
+                .add(18, 18, 18)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(b_ok)
+                    .add(t_pseudo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(t_password, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(297, Short.MAX_VALUE))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(l_title, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 159, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(316, 316, 316))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 300, Short.MAX_VALUE)
+            .add(layout.createSequentialGroup()
+                .add(36, 36, 36)
+                .add(l_title)
+                .add(57, 57, 57)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(l_pseudo)
+                    .add(t_pseudo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(l_mdp)
+                    .add(t_password, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(35, 35, 35)
+                .add(b_ok)
+                .addContainerGap(345, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+    
+    
+    
+    //  Click OK button
+    private void b_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_okActionPerformed
+        
+        String pseudo = this.t_pseudo.getText();
+        String password = this.t_password.getText();
+        
+        Log.v("Logging ...");
+        
+        if( pseudo.length() > 0 && password.length() > 0 )
+        {
+            String url = "http://localhost:9000/user/read?pseudo="+pseudo+"&password="+password;
+            HttpResponse response = HttpUtils.getInstance().sendRequestGet( url );
+            String jsonString = response.text;
+            
+            if( response.code == 200 && response.text.length() > 0 )
+            {
+                Log.v("Login success");
+                Log.v( "response text : " + jsonString );
+                try
+                {
+                    JSONObject obj = new JSONObject( jsonString );
+                    App.getInstance().user = new User();
+                    App.getInstance().user.id = obj.getInt("id");
+                    App.getInstance().user.pseudo = obj.getString("pseudo");
+                    App.getInstance().user.password = obj.getString("password");
+                    App.getInstance().user.email = obj.getString("email");
+                    App.getInstance().user.isAdmin = obj.getBoolean("isAdmin");
+                    /*
+                    Log.v( "id : "+obj.getInt("id") );
+                    Log.v( "pseudo : "+obj.getString("pseudo") );
+                    Log.v( "password : "+obj.getString("password") );
+                    Log.v( "email : "+obj.getString("email") );
+                    Log.v( "isAdmin : "+obj.getBoolean("isAdmin") );
+                    */
+                }
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            else
+            {
+                Log.v("Login fail");
+                //Log.v("Le serveur n'a rien renvoyé :)");
+                // USER DOESNT EXISTS
+            }
+        }
+        else
+        {
+            Log.v("L'utilisateur doit indiquer un login et un password");
+        }
+        
+        
+        
+        
+    }//GEN-LAST:event_b_okActionPerformed
+
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton b_ok;
+    private javax.swing.JLabel l_mdp;
+    private javax.swing.JLabel l_pseudo;
+    private javax.swing.JLabel l_title;
+    private javax.swing.JTextField t_password;
+    private javax.swing.JTextField t_pseudo;
     // End of variables declaration//GEN-END:variables
 }
