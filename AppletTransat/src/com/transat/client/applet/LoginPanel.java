@@ -39,9 +39,11 @@ public class LoginPanel extends javax.swing.JPanel {
         l_title = new javax.swing.JLabel();
         t_password = new javax.swing.JTextField();
         t_pseudo = new javax.swing.JTextField();
+        b_back = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(204, 204, 204));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setPreferredSize(new java.awt.Dimension(800, 600));
+        setSize(new java.awt.Dimension(800, 600));
 
         b_ok.setText("OK");
         b_ok.addActionListener(new java.awt.event.ActionListener() {
@@ -61,6 +63,13 @@ public class LoginPanel extends javax.swing.JPanel {
 
         t_pseudo.setPreferredSize(new java.awt.Dimension(100, 28));
 
+        b_back.setText("<--");
+        b_back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                b_backActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -77,31 +86,42 @@ public class LoginPanel extends javax.swing.JPanel {
                     .add(t_password, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(297, Short.MAX_VALUE))
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .add(b_back)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(l_title, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 159, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(316, 316, 316))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(36, 36, 36)
-                .add(l_title)
-                .add(57, 57, 57)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(l_pseudo)
-                    .add(t_pseudo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(l_mdp)
-                    .add(t_password, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(35, 35, 35)
-                .add(b_ok)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(layout.createSequentialGroup()
+                        .add(36, 36, 36)
+                        .add(l_title)
+                        .add(57, 57, 57)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                            .add(l_pseudo)
+                            .add(t_pseudo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                            .add(l_mdp)
+                            .add(t_password, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(35, 35, 35)
+                        .add(b_ok))
+                    .add(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .add(b_back, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 39, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(345, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     
     
     
+    
+    //-------------------------------------------
+    //  ON CLICK
+    //-------------------------------------------
     //  Click OK button
     private void b_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_okActionPerformed
         
@@ -136,6 +156,7 @@ public class LoginPanel extends javax.swing.JPanel {
                     Log.v( "email : "+obj.getString("email") );
                     Log.v( "isAdmin : "+obj.getBoolean("isAdmin") );
                     */
+                    Transat.instance.changeMode(Transat.MODE_HOME);
                 }
                 catch (JSONException e)
                 {
@@ -152,16 +173,18 @@ public class LoginPanel extends javax.swing.JPanel {
         else
         {
             Log.v("L'utilisateur doit indiquer un login et un password");
-        }
-        
-        
-        
-        
+        } 
     }//GEN-LAST:event_b_okActionPerformed
+    
+    // button back
+    private void b_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_backActionPerformed
+        Transat.instance.changeMode(Transat.MODE_HOME);
+    }//GEN-LAST:event_b_backActionPerformed
 
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton b_back;
     private javax.swing.JButton b_ok;
     private javax.swing.JLabel l_mdp;
     private javax.swing.JLabel l_pseudo;

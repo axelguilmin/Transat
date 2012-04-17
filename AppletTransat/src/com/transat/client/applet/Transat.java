@@ -20,10 +20,11 @@ public class Transat extends javax.swing.JApplet {
     //------------------------------------------
     //  STATIC
     //------------------------------------------
-    static final int MODE_NONE = 0;
-    static final int MODE_HOME = 1;
-    static final int MODE_SIGNUP = 2;
-    static final int MODE_LOGIN = 3;
+    public static Transat instance = null;
+    public static final int MODE_NONE = 0;
+    public static final int MODE_HOME = 1;
+    public static final int MODE_SIGNUP = 2;
+    public static final int MODE_LOGIN = 3;
     
     
     
@@ -85,6 +86,9 @@ public class Transat extends javax.swing.JApplet {
             ex.printStackTrace();
         }
         
+        // store reference to change mode later
+        Transat.instance = this;
+
         this.setContentPane( new HomePanel() );
     }
     
@@ -92,27 +96,31 @@ public class Transat extends javax.swing.JApplet {
     
     
     
-    //
+    //------------------------------------
     //  METHODS
-    //
+    //------------------------------------
     public void changeMode( int newMode )
     {
         switch( newMode )
         {
             case Transat.MODE_NONE:
                 this.MODE = MODE_NONE;
+                this.repaint();
                 break;
             case Transat.MODE_SIGNUP:
                 this.MODE = MODE_SIGNUP;
                 this.setContentPane( new SignupPanel() );
+                this.repaint();
                 break;
             case Transat.MODE_LOGIN:
                 this.MODE = MODE_LOGIN;
-                this.setContentPane( new LoginPanel() );                
+                this.setContentPane( new LoginPanel() );
+                this.repaint();
                 break;
             case Transat.MODE_HOME:
                 this.MODE = MODE_HOME;
                 this.setContentPane( new HomePanel() );
+                this.repaint();
                 break;
         }
         
@@ -140,6 +148,7 @@ public class Transat extends javax.swing.JApplet {
 
         setMinimumSize(new java.awt.Dimension(800, 600));
         setPreferredSize(new java.awt.Dimension(800, 600));
+        setSize(new java.awt.Dimension(800, 600));
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

@@ -12,8 +12,11 @@ applet/eclipse/
 applet/.externalToolBuilders
 applet/bin
 server/db
-server/public
 /AppletTransat/dist/
 AppletTransat/build/
 AppletTransat/build/classes/
 server/logs/
+server/test-result/
+server/tmp/
+server/hs_err_pid3647.log
+server/hs_err_pid4188.log

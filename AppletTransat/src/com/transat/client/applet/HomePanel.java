@@ -15,6 +15,12 @@ public class HomePanel extends javax.swing.JPanel {
      */
     public HomePanel() {
         initComponents();
+        
+        // If user logged
+        if( App.getInstance().user != null && App.getInstance().user.id != 0 )
+        {
+            this.l_username.setText( "vous êtes connecté : " + App.getInstance().user.pseudo );
+        }
     }
 
     /**
@@ -29,9 +35,11 @@ public class HomePanel extends javax.swing.JPanel {
         b_createAccount = new javax.swing.JButton();
         b_login = new javax.swing.JButton();
         b_play = new javax.swing.JButton();
+        l_username = new javax.swing.JLabel();
 
         setMinimumSize(new java.awt.Dimension(800, 600));
         setPreferredSize(new java.awt.Dimension(800, 600));
+        setSize(new java.awt.Dimension(800, 600));
 
         b_createAccount.setText("Créer un compte");
         b_createAccount.addActionListener(new java.awt.event.ActionListener() {
@@ -50,21 +58,24 @@ public class HomePanel extends javax.swing.JPanel {
         b_play.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         b_play.setText("JOUER");
 
+        l_username.setText("vous n'êtes pas connecté");
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .addContainerGap(294, Short.MAX_VALUE)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                        .add(b_createAccount)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(b_login)
-                        .addContainerGap())
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                        .add(b_play, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 221, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(285, 285, 285))))
+                .add(b_play, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 221, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(285, 285, 285))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                .add(14, 14, 14)
+                .add(l_username)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(b_createAccount)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(b_login)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -72,19 +83,28 @@ public class HomePanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(b_createAccount)
-                    .add(b_login))
+                    .add(b_login)
+                    .add(l_username))
                 .add(104, 104, 104)
                 .add(b_play, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 106, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(355, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    
+    
+    //---------------------------------
+    //  CLICK
+    //---------------------------------
+    
+    // Create account
     private void b_createAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_createAccountActionPerformed
         System.out.println("CREATE ACCOUNT");
         Transat t = (Transat) this.getParent().getParent().getParent();
         t.changeMode(Transat.MODE_SIGNUP);
     }//GEN-LAST:event_b_createAccountActionPerformed
-
+    
+    // Login
     private void b_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_loginActionPerformed
         System.out.println("LOGIN");
         Transat t = (Transat) this.getParent().getParent().getParent();
@@ -95,5 +115,6 @@ public class HomePanel extends javax.swing.JPanel {
     private javax.swing.JButton b_createAccount;
     private javax.swing.JButton b_login;
     private javax.swing.JButton b_play;
+    private javax.swing.JLabel l_username;
     // End of variables declaration//GEN-END:variables
 }
